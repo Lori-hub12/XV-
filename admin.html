@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración | XV María Clara</title>
+    <title>Panel de AdministraciÃ³n | XV Mara Clara</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -339,29 +339,29 @@
         <div class="login-box">
             <i class="fas fa-crown" style="font-size: 3rem; color: var(--silver); margin-bottom: 1rem;"></i>
             <h2>Acceso Privado</h2>
-            <p>Panel de administración de organizadores</p>
+            <p>Panel de administraciÃ³n de organizadores</p>
             
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="email">Correo Electrónico</label>
+                    <label for="email">Correo ElectrÃ³nico</label>
                     <input type="email" id="email" required placeholder="admin@mariaclara.com">
                 </div>
                 <div class="form-group">
-                    <label for="password">Contraseña</label>
-                    <input type="password" id="password" required placeholder="••••••••">
+                    <label for="password">ContraseÃ±a</label>
+                    <input type="password" id="password" required placeholder="">
                 </div>
                 <button type="submit" class="btn-login"><i class="fas fa-sign-in-alt"></i> Entrar al Panel</button>
-                <div id="loginError" class="error-message">Correo o contraseña incorrectos.</div>
+                <div id="loginError" class="error-message">Correo o contraseÃ±a incorrectos.</div>
             </form>
             
-            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Volver a la invitación</a>
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Volver a la invitaciÃ³n</a>
         </div>
     </div>
 
     <!-- DASHBOARD SCREEN -->
     <div id="dashboardScreen">
         <header class="admin-header">
-            <h1><i class="fas fa-crown"></i> Admin - XV María Clara</h1>
+            <h1><i class="fas fa-crown"></i> Admin - XV MarÃ­a Clara</h1>
             <div class="header-actions">
                 <button id="btnLogout" class="btn-action btn-logout"><i class="fas fa-sign-out-alt"></i> Salir</button>
             </div>
@@ -376,7 +376,7 @@
                 </div>
                 <div class="card">
                     <i class="fas fa-times-circle"></i>
-                    <h3>No Asistirán</h3>
+                    <h3>No AsistirÃ¡n</h3>
                     <p id="statDeclined">0</p>
                 </div>
                 <div class="card">
@@ -386,7 +386,7 @@
                 </div>
                 <div class="card">
                     <i class="fas fa-user-friends"></i>
-                    <h3>Acompañantes</h3>
+                    <h3>AcompaÃ±antes</h3>
                     <p id="statCompanions">0</p>
                 </div>
                 <div class="card">
@@ -403,7 +403,7 @@
                         <tr>
                             <th>Fecha</th>
                             <th>Nombre</th>
-                            <th>Teléfono</th>
+                            <th>TelÃ©fono</th>
                             <th>Asistencia</th>
                             <th>Acciones</th>
                         </tr>
@@ -414,7 +414,7 @@
                 </table>
                 <div id="emptyState" class="empty-state hidden">
                     <i class="fas fa-inbox fa-3x mb-2" style="color: #ccc;"></i>
-                    <p>Aún no hay confirmaciones.</p>
+                    <p>AÃºn no hay confirmaciones.</p>
                 </div>
             </div>
         </div>
@@ -513,7 +513,7 @@
                     });
                     
                     const statusClass = item.attendance === 'yes' ? 'status-yes' : 'status-no';
-                    const statusText = item.attendance === 'yes' ? 'Sí' : 'No';
+                    const statusText = item.attendance === 'yes' ? 'SÃ­' : 'No';
                     
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
@@ -522,7 +522,7 @@
                         <td>${item.phone}</td>
                         <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                         <td>
-                            <button class="btn-icon btn-view" title="Ver toda la información" onclick="viewDetails('${item.id}')">
+                            <button class="btn-icon btn-view" title="Ver toda la informaciÃ³n" onclick="viewDetails('${item.id}')">
                                 <i class="fas fa-eye"></i>
                             </button>
                             <button class="btn-icon btn-delete" title="Eliminar registro" onclick="deleteItem('${item.id}')">
@@ -546,7 +546,7 @@
 
         // Delete specific item
         window.deleteItem = function(id) {
-            if (confirm('¿Estás seguro de que deseas eliminar la respuesta de este invitado?')) {
+            if (confirm('Â¿EstÃ¡s seguro de que deseas eliminar la respuesta de este invitado?')) {
                 globalData = globalData.filter(item => item.id !== id);
                 localStorage.setItem('mariaClaraRSVP', JSON.stringify(globalData));
                 loadData();
@@ -564,17 +564,17 @@
 
             const date = new Date(item.timestamp).toLocaleString('es-ES');
             const statusClass = item.attendance === 'yes' ? 'status-yes' : 'status-no';
-            const statusText = item.attendance === 'yes' ? 'Sí, asistirá' : 'No podré asistir';
+            const statusText = item.attendance === 'yes' ? 'SÃ­, asistir' : 'No podrÃ© asistir';
             
             let extraInfo = '';
             if(item.attendance === 'yes') {
                 extraInfo = `
                     <div class="detail-row">
-                        <strong>Número de Acompañantes:</strong>
+                        <strong>NÃºmero de AcompaÃ±antes:</strong>
                         <span>${item.companions}</span>
                     </div>
                     <div class="detail-row">
-                        <strong>Nombres de los Acompañantes:</strong>
+                        <strong>Nombres de los AcompaÃ±antes:</strong>
                         <span>${item.companionNames ? item.companionNames : '<em>Ninguno ingresado</em>'}</span>
                     </div>
                     <div class="detail-row">
@@ -586,7 +586,7 @@
 
             modalBody.innerHTML = `
                 <div class="detail-row">
-                    <strong>Fecha de confirmación:</strong>
+                    <strong>Fecha de confirmaciÃ³n:</strong>
                     <span>${date}</span>
                 </div>
                 <div class="detail-row">
@@ -594,11 +594,11 @@
                     <span>${item.fullName}</span>
                 </div>
                 <div class="detail-row">
-                    <strong>Teléfono:</strong>
+                    <strong>TelÃ©fono:</strong>
                     <span><a href="https://wa.me/${item.phone.replace(/[^0-9]/g, '')}" target="_blank" style="color:#25D366; text-decoration:none;"><i class="fab fa-whatsapp"></i> ${item.phone}</a></span>
                 </div>
                 <div class="detail-row">
-                    <strong>¿Asistirá?:</strong>
+                    <strong>Â¿AsistirÃ¡?:</strong>
                     <span><span class="status-badge ${statusClass}">${statusText}</span></span>
                 </div>
                 ${extraInfo}
