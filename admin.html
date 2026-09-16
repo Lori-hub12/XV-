@@ -524,10 +524,16 @@
             
             const tbody = document.getElementById('guestsBody');
             tbody.innerHTML = '';
+            const emptyState = document.getElementById('emptyState');
+            const guestsTable = document.getElementById('guestsTable');
             
             if (globalData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;"><i class="fas fa-inbox" style="font-size: 2rem; color: #ddd; margin-bottom: 0.5rem; display: block;"></i><p>Aún no hay confirmaciones.</p></td></tr>';
+                emptyState.style.display = 'block';
+                guestsTable.style.display = 'none';
             } else {
+                emptyState.style.display = 'none';
+                guestsTable.style.display = 'table';
+                
                 globalData.forEach(item => {
                     if (item.asistencia === 'yes') {
                         confirmed++;
