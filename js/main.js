@@ -1,4 +1,4 @@
-// --- Money Rain Effect ---
+﻿// --- Money Rain Effect ---
 const moneyEmojis = ['u1F4B5', 'u1F4B6', 'u1F4B7', 'u1F4B4', 'u1F4B8', 'u1F911', 'u1F4B0', 'u1F4B3'];
 
 function triggerMoneyRain() {
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Countdown ---
     // Set date to September 24, 2026 at 18:00 (6:00 PM)
-    const eventDate = new Date('2026-10-18T18:00:00').getTime();
+    const eventDate = new Date('2026-10-17T18:00:00').getTime();
     
     const daysEl = document.getElementById('days');
     const hoursEl = document.getElementById('hours');
