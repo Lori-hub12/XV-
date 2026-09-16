@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Countdown ---
     // Set date to September 24, 2026 at 18:00 (6:00 PM)
-    const eventDate = new Date('2026-10-20T18:00:00').getTime();
+    const eventDate = new Date('2026-10-18T18:00:00').getTime();
     
     const daysEl = document.getElementById('days');
     const hoursEl = document.getElementById('hours');
