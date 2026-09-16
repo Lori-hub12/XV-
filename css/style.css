@@ -628,6 +628,28 @@ h1, h2, h3, h4 {
 .timeline-content p {
     margin: 0;
     font-weight: 500;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.timeline-time {
+    display: inline-block;
+    background: var(--primary);
+    color: var(--silver);
+    font-size: 0.75rem;
+    font-family: var(--font-title);
+    letter-spacing: 1px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+}
+
+.timeline-content h4 {
+    margin: 0 0 6px 0;
+    color: var(--primary-dark);
+    font-size: 1rem;
+    letter-spacing: 1px;
 }
 
 /* Waltz Section */
