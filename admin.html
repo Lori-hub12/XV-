@@ -435,9 +435,6 @@
 
     <script>
         // --- Authentication Logic ---
-        const ADMIN_EMAIL = 'admin@mariaclara.com';
-        const ADMIN_PASS = 'princesa2026';
-        
         const loginScreen = document.getElementById('loginScreen');
         const dashboardScreen = document.getElementById('dashboardScreen');
         const loginForm = document.getElementById('loginForm');
@@ -448,17 +445,42 @@
             showDashboard();
         }
 
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'Verificando...';
+            submitBtn.disabled = true;
 
-            if (email === ADMIN_EMAIL && password === ADMIN_PASS) {
-                sessionStorage.setItem('isAdminLoggedIn', 'true');
-                loginError.style.display = 'none';
-                showDashboard();
-            } else {
-                loginError.style.display = 'block';
+            try {
+                const SUPABASE_URL = 'https://jmwftvidkhcegmdercsy.supabase.co/rest/v1';
+                const SUPABASE_KEY = 'sb_publishable_gc2UsrSbtezN_xESGf58dg_WHKAeHHG';
+                
+                const response = await fetch(`${SUPABASE_URL}/admin_users?email=eq.${encodeURIComponent(email)}&password=eq.${encodeURIComponent(password)}`, {
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`
+                    }
+                });
+                
+                const data = await response.json();
+
+                if (data && data.length > 0) {
+                    sessionStorage.setItem('isAdminLoggedIn', 'true');
+                    loginError.style.display = 'none';
+                    showDashboard();
+                } else {
+                    loginError.style.display = 'block';
+                }
+            } catch (error) {
+                console.error("Login error:", error);
+                alert("Error al conectar con la base de datos");
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
             }
         });
 
