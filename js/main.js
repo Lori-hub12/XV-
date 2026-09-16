@@ -1,4 +1,4 @@
-﻿// --- Money Rain Effect ---
+// --- Money Rain Effect ---
 const moneyEmojis = ['u1F4B5', 'u1F4B6', 'u1F4B7', 'u1F4B4', 'u1F4B8', 'u1F911', 'u1F4B0', 'u1F4B3'];
 
 function triggerMoneyRain() {
@@ -179,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const attendance = document.querySelector('input[name="attendance"]:checked').value;
         const companions = attendance === 'yes' ? document.getElementById('companions').value : '0';
         const companionNames = attendance === 'yes' ? document.getElementById('companionNames').value : '';
-        const restrictions = document.getElementById('restrictions').value;
         
         // Create RSVP object
         const rsvpData = {
@@ -189,7 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
             attendance,
             companions,
             companionNames,
-            restrictions,
             timestamp: new Date().toISOString()
         };
         
