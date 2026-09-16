@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    rsvpForm.addEventListener('submit', (e) => {
+    rsvpForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const fullName = document.getElementById('fullName').value;
@@ -180,33 +180,54 @@ document.addEventListener('DOMContentLoaded', () => {
         const companions = attendance === 'yes' ? document.getElementById('companions').value : '0';
         const companionNames = attendance === 'yes' ? document.getElementById('companionNames').value : '';
         
-        // Create RSVP object
+        // Disable button to prevent double submit
+        const submitBtn = rsvpForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerText;
+        submitBtn.innerText = 'ENVIANDO...';
+        submitBtn.disabled = true;
+
+        const supabaseUrl = 'https://jmwftvidkhcegmdercsy.supabase.co/rest/v1/rsvp_invitados';
+        const supabaseKey = 'sb_publishable_gc2UsrSbtezN_xESGf58dg_WHKAeHHG';
+
         const rsvpData = {
-            id: Date.now().toString(),
-            fullName,
-            phone,
-            attendance,
-            companions,
-            companionNames,
-            timestamp: new Date().toISOString()
+            nombre: fullName,
+            telefono: phone,
+            asistencia: attendance,
+            acompanantes: companions,
+            nombres_acompanantes: companionNames
         };
-        
-        // Save to localStorage (Simulation of backend API / Firebase)
-        let existingData = localStorage.getItem('mariaClaraRSVP');
-        existingData = existingData ? JSON.parse(existingData) : [];
-        existingData.push(rsvpData);
-        localStorage.setItem('mariaClaraRSVP', JSON.stringify(existingData));
-        
-        // Show success message
-        rsvpForm.style.display = 'none';
-        
-        if (attendance === 'yes') {
-            successMessage.textContent = `?Gracias, ${fullName.split(' ')[0]}! Mar?a Clara espera compartir esta noche contigo. ??`;
-        } else {
-            successMessage.textContent = `Gracias por avisarnos, ${fullName.split(' ')[0]}. Te extra?aremos en esta noche especial.`;
+
+        try {
+            const response = await fetch(supabaseUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': supabaseKey,
+                    'Authorization': `Bearer ${supabaseKey}`
+                },
+                body: JSON.stringify(rsvpData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al guardar en la base de datos');
+            }
+
+            // Show success message
+            rsvpForm.style.display = 'none';
+            
+            if (attendance === 'yes') {
+                document.getElementById('successMessage').innerText = '¡Gracias! María Clara espera compartir esta noche contigo. ❤️';
+            } else {
+                document.getElementById('successMessage').innerText = '¡Qué pena que no puedas acompañarnos! Gracias por avisar. ✨';
+            }
+            
+            rsvpSuccess.classList.remove('hidden');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Hubo un problema al enviar tu confirmación. Por favor intenta de nuevo.');
+            submitBtn.innerText = originalBtnText;
+            submitBtn.disabled = false;
         }
-        
-        rsvpSuccess.classList.remove('hidden');
     });
 
     // --- Lightbox for Gallery ---

@@ -477,10 +477,24 @@
 
         // --- Dashboard & Data Logic ---
         let globalData = []; // Store it globally to access from modal
-
-        function loadData() {
-            const dataStr = localStorage.getItem('mariaClaraRSVP');
-            globalData = dataStr ? JSON.parse(dataStr) : [];
+        const SUPABASE_URL = 'https://jmwftvidkhcegmdercsy.supabase.co/rest/v1/rsvp_invitados';
+        const SUPABASE_KEY = 'sb_publishable_gc2UsrSbtezN_xESGf58dg_WHKAeHHG';
+        
+        async function loadData() {
+            try {
+                const response = await fetch(`${SUPABASE_URL}?select=*&order=fecha_registro.desc`, {
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Network response was not ok');
+                globalData = await response.json();
+            } catch (error) {
+                console.error("Error loading data from Supabase:", error);
+                globalData = [];
+            }
             
             let confirmed = 0;
             let declined = 0;
@@ -490,36 +504,29 @@
             tbody.innerHTML = '';
             
             if (globalData.length === 0) {
-                document.getElementById('emptyState').style.display = 'block';
-                document.getElementById('guestsTable').style.display = 'none';
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;"><i class="fas fa-inbox" style="font-size: 2rem; color: #ddd; margin-bottom: 0.5rem; display: block;"></i><p>Aún no hay confirmaciones.</p></td></tr>';
             } else {
-                document.getElementById('emptyState').style.display = 'none';
-                document.getElementById('guestsTable').style.display = 'table';
-                
-                // Sort to show newest first
-                globalData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
                 globalData.forEach(item => {
-                    if (item.attendance === 'yes') {
+                    if (item.asistencia === 'yes') {
                         confirmed++;
-                        totalCompanions += parseInt(item.companions || 0);
+                        totalCompanions += parseInt(item.acompanantes || 0);
                     } else {
                         declined++;
                     }
                     
-                    const date = new Date(item.timestamp).toLocaleDateString('es-ES', { 
+                    const date = new Date(item.fecha_registro).toLocaleDateString('es-ES', { 
                         day: '2-digit', month: '2-digit', year: 'numeric',
                         hour: '2-digit', minute:'2-digit'
                     });
                     
-                    const statusClass = item.attendance === 'yes' ? 'status-yes' : 'status-no';
-                    const statusText = item.attendance === 'yes' ? 'Sí' : 'No';
+                    const statusClass = item.asistencia === 'yes' ? 'status-yes' : 'status-no';
+                    const statusText = item.asistencia === 'yes' ? 'Sí' : 'No';
                     
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${date}</td>
-                        <td><strong>${item.fullName}</strong></td>
-                        <td>${item.phone}</td>
+                        <td><strong>${item.nombre}</strong></td>
+                        <td>${item.telefono}</td>
                         <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                         <td>
                             <button class="btn-icon btn-view" title="Ver toda la información" onclick="viewDetails('${item.id}')">
@@ -535,21 +542,28 @@
             }
             
             // Update stats
-            document.getElementById('statConfirmed').textContent = confirmed;
-            document.getElementById('statDeclined').textContent = declined;
-            document.getElementById('statGuests').textContent = confirmed;
-            document.getElementById('statCompanions').textContent = totalCompanions;
-            document.getElementById('statTotal').textContent = confirmed + totalCompanions;
+            document.getElementById('statConfirmed').innerText = confirmed;
+            document.getElementById('statDeclined').innerText = declined;
+            document.getElementById('statGuests').innerText = confirmed;
+            document.getElementById('statCompanions').innerText = totalCompanions;
+            document.getElementById('statTotal').innerText = confirmed + totalCompanions;
         }
 
-        // --- Action Functions ---
-
-        // Delete specific item
-        window.deleteItem = function(id) {
+        window.deleteItem = async function(id) {
             if (confirm('¿Estás seguro de que deseas eliminar la respuesta de este invitado?')) {
-                globalData = globalData.filter(item => item.id !== id);
-                localStorage.setItem('mariaClaraRSVP', JSON.stringify(globalData));
-                loadData();
+                try {
+                    await fetch(`${SUPABASE_URL}?id=eq.${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'apikey': SUPABASE_KEY,
+                            'Authorization': `Bearer ${SUPABASE_KEY}`
+                        }
+                    });
+                    loadData();
+                } catch(error) {
+                    console.error("Error deleting:", error);
+                    alert("Error al eliminar el registro.");
+                }
             }
         };
 
@@ -562,20 +576,20 @@
             const item = globalData.find(i => i.id === id);
             if (!item) return;
 
-            const date = new Date(item.timestamp).toLocaleString('es-ES');
-            const statusClass = item.attendance === 'yes' ? 'status-yes' : 'status-no';
-            const statusText = item.attendance === 'yes' ? 'Sí, asistir' : 'No podré asistir';
+            const date = new Date(item.fecha_registro).toLocaleString('es-ES');
+            const statusClass = item.asistencia === 'yes' ? 'status-yes' : 'status-no';
+            const statusText = item.asistencia === 'yes' ? 'Sí, asistirá' : 'No podrá asistir';
             
             let extraInfo = '';
-            if(item.attendance === 'yes') {
+            if(item.asistencia === 'yes') {
                 extraInfo = `
                     <div class="detail-row">
                         <strong>Número de Acompañantes:</strong>
-                        <span>${item.companions}</span>
+                        <span>${item.acompanantes}</span>
                     </div>
                     <div class="detail-row">
                         <strong>Nombres de los Acompañantes:</strong>
-                        <span>${item.companionNames ? item.companionNames : '<em>Ninguno ingresado</em>'}</span>
+                        <span>${item.nombres_acompanantes ? item.nombres_acompanantes : '<em>Ninguno ingresado</em>'}</span>
                     </div>
                 `;
             }
@@ -587,19 +601,19 @@
                 </div>
                 <div class="detail-row">
                     <strong>Nombre Completo:</strong>
-                    <span>${item.fullName}</span>
+                    <span>${item.nombre}</span>
                 </div>
                 <div class="detail-row">
                     <strong>Teléfono:</strong>
-                    <span><a href="https://wa.me/${item.phone.replace(/[^0-9]/g, '')}" target="_blank" style="color:#25D366; text-decoration:none;"><i class="fab fa-whatsapp"></i> ${item.phone}</a></span>
+                    <span><a href="https://wa.me/${(item.telefono || '').replace(/[^0-9]/g, '')}" target="_blank" style="color:#25D366; text-decoration:none;"><i class="fab fa-whatsapp"></i> ${item.telefono}</a></span>
                 </div>
                 <div class="detail-row">
                     <strong>¿Asistirá?:</strong>
-                    <span><span class="status-badge ${statusClass}">${statusText}</span></span>
+                    <span class="status-badge ${statusClass}" style="margin:0">${statusText}</span>
                 </div>
                 ${extraInfo}
             `;
-
+            
             modal.style.display = 'flex';
         };
 
@@ -612,6 +626,9 @@
                 modal.style.display = 'none';
             }
         });
+
+        // Initialize
+        loadData();
 
     </script>
 </body>
