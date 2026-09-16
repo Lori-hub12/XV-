@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis XV Años | María Clara</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Global Petals Container -->
+    <div id="globalPetals" class="petals-container" style="position: fixed; z-index: 9999; pointer-events: none;"></div>
+
+    <button id="musicToggle" class="music-btn" aria-label="Reproducir música">
+        <i class="fas fa-play"></i>
+    </button>
+    <audio id="bgMusic" loop>
+        <source src="assets/music/song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="welcomeScreen" class="welcome-screen">
+        <div class="welcome-content">
+            <h1 class="welcome-name">María Clara</h1>
+            <h2 class="welcome-subtitle">MIS XV AÑOS</h2>
+            <p class="welcome-phrase">"Hay momentos que quedan para siempre en el corazón..."</p>
+            <div id="personalizedGreeting" class="personalized-greeting hidden"></div>
+            <button id="btnEnter" class="btn-elegant">ENTRAR A LA INVITACIÓN</button>
+        </div>
+    </div>
+
+    <div id="mainContent" class="main-content hidden">
+        <nav class="floating-menu">
+            <div class="hamburger" id="hamburgerMenu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="menu-links" id="menuLinks">
+                <li><a href="#hero">Inicio</a></li>
+                <li><a href="#message">Nuestra Noche</a></li>
+                <li><a href="#ceremony">Ubicación</a></li>
+                <li><a href="#itinerary">Itinerario</a></li>
+                <li><a href="#dresscode">Vestimenta</a></li>
+                <li><a href="#gifts">Regalos</a></li>
+                <li><a href="#gallery">Galería</a></li>
+                <li><a href="#rsvp">Confirmar</a></li>
+                <li><hr style="border-color: var(--silver); margin: 0.5rem 0;"></li>
+                <li><a href="admin.html" style="font-weight: bold; color: var(--primary-dark);"><i class="fas fa-lock" style="font-size: 0.8rem; margin-right: 5px;"></i>Administración</a></li>
+            </ul>
+        </nav>
+
+        <header id="hero" class="hero-section">
+            <div class="hero-overlay"></div>
+            <div class="hero-text fade-in">
+                <div class="ornament top-ornament"></div>
+                <h1 class="hero-title">María Clara</h1>
+                <h2 class="hero-subtitle">MIS XV AÑOS</h2>
+                <div class="hero-date">
+                    <span>20 DE OCTUBRE DE 2026</span>
+                    <span class="separator">|</span>
+                    <span>6:00 P. M.</span>
+                </div>
+                <div class="ornament bottom-ornament"></div>
+            </div>
+        </header>
+
+        <section id="message" class="message-section fade-in">
+            <div class="container text-center">
+                <i class="fas fa-gem decorative-icon"></i>
+                <p class="elegant-text">
+                    La vida es un hermoso viaje y hoy comienza un nuevo capítulo para mí.<br>
+                    Me llena de alegría invitarte a compartir esta noche mágica, <br>
+                    rodeada de las personas que más quiero.
+                </p>
+                <div class="floral-divider"></div>
+            </div>
+        </section>
+
+        <section class="countdown-section fade-in">
+            <div class="container text-center">
+                <h3 class="section-title">Faltan</h3>
+                <div id="countdown" class="countdown-container">
+                    <div class="time-box">
+                        <span id="days">00</span>
+                        <p>DÍAS</p>
+                    </div>
+                    <div class="time-box">
+                        <span id="hours">00</span>
+                        <p>HORAS</p>
+                    </div>
+                    <div class="time-box">
+                        <span id="minutes">00</span>
+                        <p>MINUTOS</p>
+                    </div>
+                    <div class="time-box">
+                        <span id="seconds">00</span>
+                        <p>SEGUNDOS</p>
+                    </div>
+                </div>
+                <div id="countdown-message" class="hidden">
+                    <h3 class="magic-message">Hoy comienza una noche para recordar.</h3>
+                </div>
+                
+                <div class="calendar-buttons mt-4">
+                    <a href="#" class="btn-outline" id="btnGoogleCal"><i class="fab fa-google"></i> Agregar a Google Calendar</a>
+                    <a href="#" class="btn-outline" id="btnAppleCal"><i class="far fa-calendar-alt"></i> Agregar al Calendario</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="ceremony" class="locations-section">
+            <div class="container">
+                <div class="location-cards">
+                    <div class="location-card fade-in">
+                        <i class="fas fa-church location-icon"></i>
+                        <h3 class="card-title">MISA</h3>
+                        <p class="card-text">Iglesia San Pedro</p>
+                        <p class="card-subtext">Calle Paldía y Av. América</p>
+                        <p class="card-time">6:00 P. M.</p>
+                        <a href="https://maps.google.com" target="_blank" class="btn-solid">VER UBICACIÓN</a>
+                    </div>
+                    
+                    <div class="location-card fade-in delay-1">
+                        <i class="fas fa-glass-cheers location-icon"></i>
+                        <h3 class="card-title">RECEPCIÓN</h3>
+                        <p class="card-text">Hotel Best Western Las Mercedes</p>
+                        <p class="card-subtext">Calle Surrey y Calle Julio</p>
+                        <p class="card-time">Después de la ceremonia</p>
+                        <a href="https://maps.google.com" target="_blank" class="btn-solid">VER UBICACIÓN</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="itinerary" class="itinerary-section fade-in">
+            <div class="container">
+                <h2 class="section-title text-center">Itinerario de la Noche</h2>
+                <p class="text-center schedule-summary">🕕 6:00 P. M. &rarr; 🕛 12:00 A. M.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-church"></i></div>
+                        <div class="timeline-content">
+                            <h4>6:00 P. M.</h4>
+                            <p>⛪ MISA</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-music"></i></div>
+                        <div class="timeline-content">
+                            <h4>DESPUÉS DE LA MISA</h4>
+                            <p>💃 BAILES Y CELEBRACIÓN</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-utensils"></i></div>
+                        <div class="timeline-content">
+                            <h4>DESPUÉS DE LOS BAILES</h4>
+                            <p>🍽️ CENA</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-moon"></i></div>
+                        <div class="timeline-content">
+                            <h4>12:00 A. M.</h4>
+                            <p>✨ FINAL DE LA CELEBRACIÓN</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="waltz-section fade-in">
+            <div class="waltz-overlay"></div>
+            <div class="waltz-content text-center">
+                <h2 class="waltz-title">El Vals de María Clara</h2>
+                <p class="waltz-poem">
+                    Una noche.<br>
+                    Un vestido.<br>
+                    Un momento que quedará para siempre.
+                </p>
+            </div>
+        </section>
+
+        <section id="dresscode" class="info-section fade-in">
+            <div class="container">
+                <div class="info-grid">
+                    <div class="info-box dress-code">
+                        <i class="fas fa-user-tie info-icon"></i>
+                        <h3 class="info-title">CÓDIGO DE VESTIMENTA</h3>
+                        <h4 class="info-subtitle">FORMAL</h4>
+                        <div class="dress-images">
+                            <i class="fas fa-male"></i> <i class="fas fa-female"></i>
+                        </div>
+                        <div class="alert-box">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Por favor, no vestir de rojo. El rojo está reservado exclusivamente para la quinceañera.</p>
+                        </div>
+                    </div>
+                    
+                    <div id="gifts" class="info-box gifts">
+                        <i class="fas fa-envelope-open-text info-icon"></i>
+                        <h3 class="info-title">MUESTRA DE CARIÑO</h3>
+                        <p class="info-text">Tu presencia es el mejor regalo. Si deseas obsequiarme algo, agradeceré mucho tu aporte en efectivo para ayudarme a cumplir mis sueños.</p>
+                        <h4 class="gift-highlight">REGALOS: EFECTIVO</h4>
+                        <button id="moneyRainBtn" class="btn-money-rain" onclick="triggerMoneyRain()">
+                            💸 ¡Hazlo llover!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="gallery-section fade-in">
+            <div class="container">
+                <h2 class="section-title text-center">Galería</h2>
+                <div class="masonry-gallery">
+                    <div class="gallery-item"><img src="https://picsum.photos/400/600?random=1" alt="María Clara 1"></div>
+                    <div class="gallery-item"><img src="https://picsum.photos/400/500?random=2" alt="María Clara 2"></div>
+                    <div class="gallery-item"><img src="https://picsum.photos/400/700?random=3" alt="María Clara 3"></div>
+                    <div class="gallery-item"><img src="https://picsum.photos/400/650?random=4" alt="María Clara 4"></div>
+                    <div class="gallery-item"><img src="https://picsum.photos/400/550?random=5" alt="María Clara 5"></div>
+                    <div class="gallery-item"><img src="https://picsum.photos/400/600?random=6" alt="María Clara 6"></div>
+                </div>
+            </div>
+        </section>
+
+        <div id="lightbox" class="lightbox">
+            <span class="close-lightbox">&times;</span>
+            <img class="lightbox-content" id="lightbox-img">
+        </div>
+
+        <section id="rsvp" class="rsvp-section fade-in">
+            <div class="container">
+                <div class="rsvp-card">
+                    <h2 class="section-title text-center">Confirma tu Asistencia</h2>
+                    <p class="text-center rsvp-intro">Será un honor contar contigo en esta noche tan especial.</p>
+                    <div class="rsvp-deadline">
+                        <i class="fas fa-calendar-times"></i>
+                        <span>Fecha límite para confirmar: <strong>30 de Septiembre de 2026</strong></span>
+                    </div>
+                    
+                    <form id="rsvpForm" class="rsvp-form">
+                        <div class="form-group">
+                            <label for="fullName">Nombre completo</label>
+                            <input type="text" id="fullName" required placeholder="Ej: Juan Pérez">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Número de teléfono</label>
+                            <input type="tel" id="phone" required placeholder="Ej: +52 123 456 7890">
+                        </div>
+                        <div class="form-group">
+                            <label>¿Confirmas tu asistencia?</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="attendance" value="yes" required> Sí, asistiré
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="attendance" value="no"> No podré asistir
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div id="companionsSection" class="hidden-fields">
+                            <div class="form-group">
+                                <label for="companions">Número de acompañantes</label>
+                                <select id="companions">
+                                    <option value="0">Ninguno (Voy solo/a)</option>
+                                    <option value="1">1 Acompañante</option>
+                                    <option value="2">2 Acompañantes</option>
+                                    <option value="3">3 Acompañantes</option>
+                                    <option value="4">4 Acompañantes</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="companionNamesGroup" style="display: none;">
+                                <label for="companionNames">Nombre de los acompañantes (Opcional)</label>
+                                <textarea id="companionNames" rows="2" placeholder="Ej: María López, Carlos Pérez"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="restrictions">¿Tienes alguna restricción alimentaria? (Opcional)</label>
+                            <input type="text" id="restrictions" placeholder="Ej: Vegetariano, Alergia al maní">
+                        </div>
+                        
+                        <button type="submit" class="btn-solid btn-full">CONFIRMAR ASISTENCIA</button>
+                    </form>
+                    
+                    <div id="rsvpSuccess" class="rsvp-success hidden">
+                        <i class="fas fa-heart text-red"></i>
+                        <h3 id="successMessage">¡Gracias! María Clara espera compartir esta noche contigo. ❤️</h3>
+                    </div>
+                </div>
+                
+                <div class="whatsapp-contact mt-4 text-center">
+                    <a href="https://wa.me/1234567890?text=Hola,%20tengo%20una%20duda%20sobre%20los%20XV%20de%20María%20Clara." target="_blank" class="btn-whatsapp">
+                        <i class="fab fa-whatsapp"></i> ¿TIENES ALGUNA DUDA? ESCRÍBENOS POR WHATSAPP
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="final-screen fade-in">
+            <div class="final-content text-center">
+                <h2 class="final-name">María Clara</h2>
+                <h3 class="final-subtitle">Mis XV Años</h3>
+                <p class="final-date">20 &middot; 10 &middot; 2026</p>
+                <div class="floral-divider"></div>
+                <p class="final-quote">"Gracias por formar parte de una noche que recordaré toda mi vida."</p>
+                <p class="final-closing">🌹 Nos vemos en la celebración. 🌹</p>
+                <a href="#rsvp" class="btn-elegant mt-2">CONFIRMAR MI ASISTENCIA</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
